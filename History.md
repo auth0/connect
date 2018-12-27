@@ -1,5 +1,366 @@
 
-1.0.0 / 2010-07-21
+2.0.0alpha1 / 2011-10-05 
+==================
+
+  * Added `next(statusCode)` support
+  * Added `cookieParser(secret)` support 
+  * Added signed cookie support to `cookieParser()`
+  * Added support for JSON-serialized cookies
+  * Added `err.status` support
+  * Added public `res.headerSent` checking nodes `res._headerSent`
+  * Changed node dependency to ">= 0.5.0 < 0.7.0"
+  * Changed: no longer lowercase cookie names
+  * Changed: `errorHandler()` is now a development only middleware
+  * Changed middleware to next() errors when possible so applications can unify logging / handling
+  * Improved handling of __ENAMETOOLONG__ per #369
+  * Removed `http[s].Server` inheritance (now just a function)
+  * Removed `.createServer()` (use `connect()`)
+  * Removed `secret` option from `session()` 
+  * Removed `connect.session.ignore` array support
+  * Removed `router()` middleware. Closes #262
+
+1.7.1 / 2011-09-12 
+==================
+
+  * Added: make `Store` inherit from `EventEmitter`
+  * Added session `Store#load(sess, fn)` to fetch a `Session` instance
+  * Added backpressure support to `staticCache()`
+  * Changed `res.socket.destroy()` to `req.socket.destroy()`
+
+1.7.0 / 2011-08-31 
+==================
+
+  * Added `staticCache()` middleware, a memory cache for `static()`
+  * Added public `res.headerSent` checking nodes `res._headerSent` (remove when node adds this)
+  * Changed: ignore error handling middleware when header is sent
+  * Changed: dispatcher errors after header is sent destroy the sock
+
+1.6.4 / 2011-08-26 
+==================
+
+  * Revert "Added double-next reporting"
+
+1.6.3 / 2011-08-26 
+==================
+
+  * Added double-`next()` reporting
+  * Added `immediate` option to `logger()`. Closes #321
+  * Dependency `qs >= 0.3.1`
+
+1.6.2 / 2011-08-11 
+==================
+
+  * Fixed `connect.static()` null byte vulnerability
+  * Fixed `connect.directory()` null byte vulnerability
+  * Changed: 301 redirect in `static()` to postfix "/" on directory. Closes #289
+
+1.6.1 / 2011-08-03 
+==================
+
+  * Added: allow retval `== null` from logger callback to ignore line
+  * Added `getOnly` option to `connect.static.send()`
+  * Added response "header" event allowing augmentation
+  * Added `X-CSRF-Token` header field check
+  * Changed dep `qs >= 0.3.0`
+  * Changed: persist csrf token. Closes #322
+  * Changed: sort directory middleware files alphabetically
+
+1.6.0 / 2011-07-10 
+==================
+
+  * Added :response-time to "dev" logger format
+  * Added simple `csrf()` middleware. Closes #315
+  * Fixed `res._headers` logger regression. Closes #318
+  * Removed support for multiple middleware being passed to `.use()`
+
+1.5.2 / 2011-07-06 
+==================
+
+  * Added `filter` function option to `directory()` [David Rio Deiros] 
+  * Changed: re-write of the `logger()` middleware, with extensible tokens and formats
+  * Changed: `static.send()` ".." in path without root considered malicious
+  * Fixed quotes in docs. Closes #312
+  * Fixed urls when mounting `directory()`, use `originalUrl` [Daniel Dickison]
+
+
+1.5.1 / 2011-06-20 
+==================
+
+  * Added malicious path check to `directory()` middleware
+  * Added `utils.forbidden(res)`
+  * Added `connect.query()` middleware
+
+1.5.0 / 2011-06-20 
+==================
+
+  * Added `connect.directory()` middleware for serving directory listings
+
+1.4.6 / 2011-06-18 
+==================
+
+  * Fixed `connect.static()` root with `..`
+  * Fixed `connect.static()` __EBADF__
+
+1.4.5 / 2011-06-17 
+==================
+
+  * Fixed EBADF in `connect.static()`. Closes #297
+
+1.4.4 / 2011-06-16 
+==================
+
+  * Changed `connect.static()` to check resolved dirname. Closes #294
+
+1.4.3 / 2011-06-06 
+==================
+
+  * Fixed fd leak in `connect.static()` when the socket is closed
+  * Fixed; `bodyParser()` ignoring __GET/HEAD__. Closes #285
+
+1.4.2 / 2011-05-27 
+==================
+
+  * Changed to `devDependencies`
+  * Fixed stream creation on `static()` __HEAD__ request. [Andreas Lind Petersen]
+  * Fixed Win32 support for `static()`
+  * Fixed monkey-patch issue. Closes #261
+
+1.4.1 / 2011-05-08 
+==================
+
+  * Added "hidden" option to `static()`. ignores hidden files by default. Closes   * Added; expose `connect.static.mime.define()`. Closes #251
+  * Fixed `errorHandler` middleware for missing stack traces. [aseemk]
+#274
+
+1.4.0 / 2011-04-25 
+==================
+
+  * Added route-middleware `next('route')` support to jump passed the route itself
+  * Added Content-Length support to `limit()`
+  * Added route-specific middleware support (used to be in express)
+  * Changed; refactored duplicate session logic
+  * Changed; prevent redefining `store.generate` per request
+  * Fixed; `static()` does not set Content-Type when explicitly set [nateps]
+  * Fixed escape `errorHandler()` {error} contents
+  * NOTE: `router` will be removed in 2.0
+
+
+1.3.0 / 2011-04-06 
+==================
+
+  * Added `router.remove(path[, method])` to remove a route
+
+1.2.3 / 2011-04-05 
+==================
+
+  * Fixed basicAuth realm issue when passing strings. Closes #253
+
+1.2.2 / 2011-04-05 
+==================
+
+  * Added `basicAuth(username, password)` support
+  * Added `errorHandler.title` defaulting to "Connect"
+  * Changed `errorHandler` css
+
+1.2.1 / 2011-03-30 
+==================
+
+  * Fixed `logger()` https `remoteAddress` logging [Alexander Simmerl]
+
+1.2.0 / 2011-03-30 
+==================
+
+  * Added `router.lookup(path[, method])`
+  * Added `router.match(url[, method])`
+  * Added basicAuth async support. Closes #223
+
+1.1.5 / 2011-03-27 
+==================
+
+  * Added; allow `logger()` callback function to return an empty string to ignore logging
+  * Fixed; utilizing `mime.charsets.lookup()` for `static()`. Closes 245
+
+1.1.4 / 2011-03-23 
+==================
+
+  * Added `logger()` support for format function
+  * Fixed `logger()` to support mess of writeHead()/progressive api for node 0.4.x
+
+1.1.3 / 2011-03-21 
+==================
+
+  * Changed; `limit()` now calls `req.destroy()`
+
+1.1.2 / 2011-03-21 
+==================
+
+  * Added request "limit" event to `limit()` middleware
+  * Changed; `limit()` middleware will `next(err)` on failure
+
+1.1.1 / 2011-03-18 
+==================
+
+  * Fixed session middleware for HTTPS. Closes #241 [reported by mt502]
+
+1.1.0 / 2011-03-17 
+==================
+
+  * Added `Session#reload(fn)`
+
+1.0.6 / 2011-03-09 
+==================
+
+  * Fixed `res.setHeader()` patch, preserve casing
+
+1.0.5 / 2011-03-09 
+==================
+
+  * Fixed; `logger()` using `req.originalUrl` instead of `req.url`
+
+1.0.4 / 2011-03-09 
+==================
+
+  * Added `res.charset`
+  * Added conditional sessions example
+  * Added support for `session.ignore` to be replaced. Closes #227
+  * Fixed `Cache-Control` delimiters. Closes #228
+
+1.0.3 / 2011-03-03 
+==================
+
+  * Fixed; `static.send()` invokes callback with connection error
+
+1.0.2 / 2011-03-02 
+==================
+
+  * Fixed exported connect function
+  * Fixed package.json; node ">= 0.4.1 < 0.5.0"
+
+1.0.1 / 2011-03-02 
+==================
+
+  * Added `Session#save(fn)`. Closes #213
+  * Added callback support to `connect.static.send()` for express
+  * Added `connect.static.send()` "path" option
+  * Fixed content-type in `static()` for _index.html_
+
+1.0.0 / 2011-03-01 
+==================
+
+  * Added `stack`, `message`, and `dump` errorHandler option aliases
+  * Added `req.originalMethod` to methodOverride
+  * Added `favicon()` maxAge option support
+  * Added `connect()` alternative to `connect.createServer()`
+  * Added new [documentation](http://senchalabs.github.com/connect)
+  * Added Range support to `static()`
+  * Added HTTPS support
+  * Rewrote session middleware. The session API now allows for
+    session-specific cookies, so you may alter each individually.
+    Click to view the new [session api](http://senchalabs.github.com/connect/middleware-session.html).
+  * Added middleware self-awareness. This helps prevent
+    middleware breakage when used within mounted servers.
+    For example `cookieParser()` will not parse cookies more
+    than once even when within a mounted server.  
+  * Added new examples in the `./examples` directory
+  * Added [limit()](http://senchalabs.github.com/connect/middleware-limit.html) middleware
+  * Added [profiler()](http://senchalabs.github.com/connect/middleware-profiler.html) middleware
+  * Added [responseTime()](http://senchalabs.github.com/connect/middleware-responseTime.html) middleware
+  * Renamed `staticProvider` to `static`
+  * Renamed `bodyDecoder` to `bodyParser`
+  * Renamed `cookieDecoder` to `cookieParser`
+  * Fixed ETag quotes. [reported by papandreou]
+  * Fixed If-None-Match comma-delimited ETag support. [reported by papandreou]
+  * Fixed; only set req.originalUrl once. Closes #124
+  * Fixed symlink support for `static()`. Closes #123
+
+0.5.10 / 2011-02-14 
+==================
+
+  * Fixed SID space issue. Closes #196
+  * Fixed; proxy `res.end()` to commit session data
+  * Fixed directory traversal attack in `staticProvider`. Closes #198
+
+0.5.9 / 2011-02-09 
+==================
+
+  * qs >= 0.0.4
+
+0.5.8 / 2011-02-04 
+==================
+
+  * Added `qs` dependency
+  * Fixed router race-condition causing possible failure
+    when `next()`ing to one or more routes with parallel
+    requests
+
+0.5.7 / 2011-02-01 
+==================
+
+  * Added `onvhost()` call so Express (and others) can know when they are
+  * Revert "Added stylus support" (use the middleware which ships with stylus)
+  * Removed custom `Server#listen()` to allow regular `http.Server#listen()` args to work properly
+  * Fixed long standing router issue (#83) that causes '.' to be disallowed within named placeholders in routes [Andreas Lind Petersen]
+  * Fixed `utils.uid()` length error [Jxck]
+mounted
+
+0.5.6 / 2011-01-23 
+==================
+
+  * Added stylus support to `compiler`
+  * _favicon.js_ cleanup
+  * _compiler.js_ cleanup
+  * _bodyDecoder.js_ cleanup
+
+0.5.5 / 2011-01-13 
+==================
+
+  * Changed; using sha256 HMAC instead of md5. [Paul Querna]
+  * Changed; generated a longer random UID, without time influence. [Paul Querna]
+  * Fixed; session middleware throws when secret is not present. [Paul Querna]
+
+0.5.4 / 2011-01-07 
+==================
+
+  * Added; throw when router path or callback is missing
+  * Fixed; `next(err)` on cookie parse exception instead of ignoring
+  * Revert "Added utils.pathname(), memoized url.parse(str).pathname"
+
+0.5.3 / 2011-01-05 
+==================
+
+  * Added _docs/api.html_
+  * Added `utils.pathname()`, memoized url.parse(str).pathname
+  * Fixed `session.id` issue. Closes #183
+  * Changed; Defaulting `staticProvider` maxAge to 0 not 1 year. Closes #179
+  * Removed bad outdated docs, we need something new / automated eventually
+
+0.5.2 / 2010-12-28 
+==================
+
+  * Added default __OPTIONS__ support to _router_ middleware
+
+0.5.1 / 2010-12-28 
+==================
+
+  * Added `req.session.id` mirroring `req.sessionID`
+  * Refactored router, exposing `connect.router.methods`
+  * Exclude non-lib files from npm
+  * Removed imposed headers `X-Powered-By`, `Server`, etc
+
+0.5.0 / 2010-12-06 
+==================
+
+  * Added _./index.js_
+  * Added route segment precondition support and example
+  * Added named capture group support to router
+
+0.4.0 / 2010-11-29 
+==================
+
+  * Added `basicAuth` middleware
+  * Added more HTTP methods to the `router` middleware
+
+0.3.0 / 2010-07-21
 ==================
 
   * Added _staticGzip_ middleware
